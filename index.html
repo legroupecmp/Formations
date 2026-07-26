@@ -207,7 +207,7 @@
   <ul class="nav-links">
     <li><a href="#comment">Comment</a></li>
     <li><a href="#forfaits">Forfaits</a></li>
-    <li><a href="formation.html" target="_blank">Notre Formation</a></li>
+    <li><a href="#" onclick="openModal(); return false;">Notre Formation</a></li>
     <li><a href="#temoignages">Résultats</a></li>
     <li><a href="https://www.skool.com/groupe-cmp-3784/about" target="_blank" class="nav-cta">Rejoindre →</a></li>
   </ul>
@@ -334,7 +334,7 @@
         <li>Formation PDF + Vidéos Formatives complète</li>
         <li class="non">Accompagnement VIP</li>
       </ul>
-      <a href="formation.html" target="_blank" class="btn-primary" style="margin-bottom:0.6rem; display:block; text-align:center; background:transparent; color:var(--beige); border:1.5px solid rgba(242,237,228,0.4);">Notre Formation →</a>
+      <a href="#" onclick="openModal(); return false;" class="btn-primary" style="margin-bottom:0.6rem; display:block; text-align:center; background:transparent; color:var(--beige); border:1.5px solid rgba(242,237,228,0.4);">Notre Formation →</a>
       <a href="https://www.skool.com/groupe-cmp-3784/about" target="_blank" class="btn-primary">Choisir ce forfait →</a>
     </div>
 
@@ -421,6 +421,133 @@
     © 2025 Groupe Création, Multiplication et Préservation — Tous droits réservés.
   </p>
 </footer>
+
+<!-- ============================================================
+     MODALE — Notre Formation
+============================================================ -->
+<div id="formationModal" style="display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px); overflow-y:auto; padding:2rem 1rem;">
+  <div style="max-width:820px; margin:0 auto; background:var(--blanc); border-radius:6px; overflow:hidden; position:relative;">
+
+    <!-- Bouton fermer -->
+    <button onclick="closeModal()" style="position:absolute; top:1.2rem; right:1.2rem; background:transparent; border:none; font-size:1.4rem; cursor:pointer; color:var(--texte-doux); z-index:10;">✕</button>
+
+    <!-- Hero -->
+    <div style="background:var(--vert); padding:3.5rem 3rem 2.5rem; text-align:center;">
+      <span style="display:inline-block; font-size:0.72rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--or); background:rgba(184,150,90,0.15); border:1px solid rgba(184,150,90,0.3); padding:0.3rem 1rem; border-radius:20px; margin-bottom:1.2rem;">Formation Complète</span>
+      <h2 style="font-family:var(--ff-titre); font-size:clamp(1.8rem, 4vw, 2.8rem); font-weight:300; color:var(--beige); line-height:1.15; margin-bottom:1rem;">Maîtrisez les marchés financiers<br><em style="font-style:italic; font-weight:600; color:#7EC8A4;">comme un professionnel</em></h2>
+      <p style="font-size:0.95rem; color:rgba(242,237,228,0.7); max-width:480px; margin:0 auto 2rem; line-height:1.7;">De l'anatomie des marchés à la vente à découvert avancée — une formation complète avec les outils, la discipline et la psychologie des traders professionnels.</p>
+      <a href="https://www.skool.com/groupe-cmp-3784/about" target="_blank" style="display:inline-block; background:var(--or); color:var(--blanc); padding:0.9rem 2.2rem; border-radius:2px; font-size:0.9rem; font-weight:500; text-decoration:none; letter-spacing:0.05em;">Accéder à la formation →</a>
+      <p style="margin-top:0.8rem; font-size:0.78rem; color:rgba(242,237,228,0.4);">16 cours · Quiz par chapitre · Examen final</p>
+    </div>
+
+    <!-- Stats -->
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--beige-fonce);">
+      <div style="padding:1.5rem 1rem; text-align:center; border-right:1px solid var(--beige-fonce);">
+        <div style="font-family:var(--ff-titre); font-size:2rem; font-weight:600; color:var(--vert);">16</div>
+        <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--texte-doux);">Cours</div>
+      </div>
+      <div style="padding:1.5rem 1rem; text-align:center; border-right:1px solid var(--beige-fonce);">
+        <div style="font-family:var(--ff-titre); font-size:2rem; font-weight:600; color:var(--vert);">480+</div>
+        <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--texte-doux);">Questions quiz</div>
+      </div>
+      <div style="padding:1.5rem 1rem; text-align:center; border-right:1px solid var(--beige-fonce);">
+        <div style="font-family:var(--ff-titre); font-size:2rem; font-weight:600; color:var(--vert);">30</div>
+        <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--texte-doux);">Examen final</div>
+      </div>
+      <div style="padding:1.5rem 1rem; text-align:center;">
+        <div style="font-family:var(--ff-titre); font-size:2rem; font-weight:600; color:var(--vert);">Live</div>
+        <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--texte-doux);">Trading quotidien</div>
+      </div>
+    </div>
+
+    <!-- Ce que tu apprendras -->
+    <div style="background:var(--vert); padding:2.5rem 3rem;">
+      <h3 style="font-family:var(--ff-titre); font-size:1.6rem; font-weight:300; color:var(--beige); margin-bottom:1.5rem;">À la fin de cette formation, tu sauras</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem;">
+        <div style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--or); font-weight:700; flex-shrink:0;">✓</span>
+          <span style="font-size:0.88rem; color:rgba(242,237,228,0.8);">Lire un graphique comme un institutionnel</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--or); font-weight:700; flex-shrink:0;">✓</span>
+          <span style="font-size:0.88rem; color:rgba(242,237,228,0.8);">Identifier et trader les gaps haussiers</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--or); font-weight:700; flex-shrink:0;">✓</span>
+          <span style="font-size:0.88rem; color:rgba(242,237,228,0.8);">Détecter la manipulation de marché</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--or); font-weight:700; flex-shrink:0;">✓</span>
+          <span style="font-size:0.88rem; color:rgba(242,237,228,0.8);">Maîtriser la vente à découvert</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--or); font-weight:700; flex-shrink:0;">✓</span>
+          <span style="font-size:0.88rem; color:rgba(242,237,228,0.8);">Gérer vos profits et protéger votre capital</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--or); font-weight:700; flex-shrink:0;">✓</span>
+          <span style="font-size:0.88rem; color:rgba(242,237,228,0.8);">Contrôler vos émotions sous pression</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--or); font-weight:700; flex-shrink:0;">✓</span>
+          <span style="font-size:0.88rem; color:rgba(242,237,228,0.8);">Analyser vos performances avec TraderVue</span>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:0.6rem;">
+          <span style="color:var(--or); font-weight:700; flex-shrink:0;">✓</span>
+          <span style="font-size:0.88rem; color:rgba(242,237,228,0.8);">Accéder au capital via les Prop Firms</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pour qui -->
+    <div style="padding:2.5rem 3rem;">
+      <h3 style="font-family:var(--ff-titre); font-size:1.6rem; font-weight:300; color:var(--vert); margin-bottom:1.5rem;">Cette formation est faite pour toi si…</h3>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1rem;">
+        <div style="background:var(--beige); border:1px solid var(--beige-fonce); border-radius:4px; padding:1.5rem; text-align:center;">
+          <div style="font-size:2rem; margin-bottom:0.8rem;">🎯</div>
+          <div style="font-size:0.9rem; font-weight:500; color:var(--vert); margin-bottom:0.5rem;">Tu débuttes</div>
+          <div style="font-size:0.82rem; color:var(--texte-doux); line-height:1.5;">Tu veux comprendre les marchés et avoir un système solide dès le départ</div>
+        </div>
+        <div style="background:var(--beige); border:1px solid var(--beige-fonce); border-radius:4px; padding:1.5rem; text-align:center;">
+          <div style="font-size:2rem; margin-bottom:0.8rem;">📈</div>
+          <div style="font-size:0.9rem; font-weight:500; color:var(--vert); margin-bottom:0.5rem;">Tu trades déjà</div>
+          <div style="font-size:0.82rem; color:var(--texte-doux); line-height:1.5;">Tu perds de l'argent et cherches à corriger tes erreurs avec des données concrètes</div>
+        </div>
+        <div style="background:var(--beige); border:1px solid var(--beige-fonce); border-radius:4px; padding:1.5rem; text-align:center;">
+          <div style="font-size:2rem; margin-bottom:0.8rem;">🏦</div>
+          <div style="font-size:0.9rem; font-weight:500; color:var(--vert); margin-bottom:0.5rem;">Tu vises les Prop Firms</div>
+          <div style="font-size:0.82rem; color:var(--texte-doux); line-height:1.5;">Tu veux trader le capital des autres sans risquer tes économies personnelles</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA bas -->
+    <div style="background:var(--beige-fonce); padding:2rem 3rem; text-align:center;">
+      <a href="https://www.skool.com/groupe-cmp-3784/about" target="_blank" style="display:inline-block; background:var(--vert); color:var(--beige); padding:0.9rem 2.5rem; border-radius:2px; font-size:0.9rem; font-weight:500; text-decoration:none; letter-spacing:0.05em;">Rejoindre la formation →</a>
+      <p style="margin-top:0.8rem; font-size:0.78rem; color:var(--texte-doux);">Formation Short Selling — 1 899 $ · Accès 1 an</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('formationModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('formationModal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  // Fermer en cliquant en dehors
+  document.getElementById('formationModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+  // Fermer avec la touche Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
 
 </body>
 </html>

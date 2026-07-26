@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Groupe CMP — Trading Live</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     COULEURS — Modifie ici pour changer tout le site
+  ============================================================ */
+  :root {
+    --vert:        #1E3A2F;
+    --vert-mid:    #2E5743;
+    --vert-clair:  #4A7C5E;
+    --beige:       #F2EDE4;
+    --beige-fonce: #E0D8CC;
+    --or:          #B8965A;
+    --blanc:       #FAFAF7;
+    --texte:       #1A1A1A;
+    --texte-doux:  #5A5A5A;
+    --ff-titre:    'Cormorant Garamond', serif;
+    --ff-corps:    'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--ff-corps);
+    background: var(--beige);
+    color: var(--texte);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ============================================================
+     NAV — Barre de navigation fixe en haut
+  ============================================================ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: rgba(242, 237, 228, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--beige-fonce);
+  }
+  .nav-logo { font-family: var(--ff-titre); font-size: 1.3rem; font-weight: 600; color: var(--vert); letter-spacing: 0.02em; }
+  .nav-logo span { color: var(--or); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--texte-doux); text-decoration: none; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--vert); }
+  .nav-cta { background: var(--vert); color: var(--beige) !important; padding: 0.55rem 1.3rem; border-radius: 2px; font-weight: 500 !important; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--vert-mid) !important; }
+
+  /* ============================================================
+     HERO — Section principale (première vue)
+  ============================================================ */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 8rem 5% 5rem; gap: 4rem;
+    background: var(--beige);
+  }
+  .hero-eyebrow { display: inline-block; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--or); margin-bottom: 1.5rem; border-bottom: 1px solid var(--or); padding-bottom: 0.4rem; }
+  .hero h1 { font-family: var(--ff-titre); font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 300; line-height: 1.1; color: var(--vert); margin-bottom: 1.5rem; }
+  .hero h1 em { font-style: italic; font-weight: 600; color: var(--vert-clair); }
+  .hero-sub { font-size: 1.05rem; color: var(--texte-doux); max-width: 480px; margin-bottom: 2.5rem; line-height: 1.7; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  /* ============================================================
+     BOUTONS — Styles globaux des boutons
+  ============================================================ */
+  .btn-primary { background: var(--vert); color: var(--beige); padding: 0.9rem 2rem; border-radius: 2px; font-size: 0.9rem; font-weight: 500; text-decoration: none; letter-spacing: 0.05em; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-primary:hover { background: var(--vert-mid); transform: translateY(-1px); }
+  .btn-secondary { background: transparent; color: var(--vert); padding: 0.9rem 2rem; border-radius: 2px; font-size: 0.9rem; font-weight: 500; text-decoration: none; letter-spacing: 0.05em; border: 1.5px solid var(--vert); transition: background 0.2s, color 0.2s; display: inline-block; }
+  .btn-secondary:hover { background: var(--vert); color: var(--beige); }
+
+  /* ============================================================
+     HERO VISUEL — Graphique de performance à droite
+     Modifie les chiffres directement dans le HTML plus bas
+  ============================================================ */
+  .hero-visual { display: flex; flex-direction: column; gap: 1.2rem; }
+  .chart-mock { background: var(--vert); border-radius: 6px; padding: 2rem; color: var(--beige); position: relative; overflow: hidden; }
+  .chart-mock::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(184,150,90,0.15) 0%, transparent 60%); }
+  .chart-label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--or); margin-bottom: 0.5rem; }
+  .chart-number { font-family: var(--ff-titre); font-size: 2.8rem; font-weight: 600; color: #7EC8A4; line-height: 1; margin-bottom: 0.3rem; }
+  .chart-desc { font-size: 0.85rem; color: rgba(242,237,228,0.7); }
+  .chart-bars { display: flex; align-items: flex-end; gap: 4px; height: 60px; margin-top: 1.5rem; }
+  .bar { flex: 1; border-radius: 2px 2px 0 0; }
+  .bar.up   { background: #7EC8A4; }
+  .bar.down { background: rgba(220,100,80,0.6); }
+  .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .stat-card { background: var(--blanc); border: 1px solid var(--beige-fonce); border-radius: 4px; padding: 1.2rem 1.4rem; }
+  .stat-card .s-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--texte-doux); margin-bottom: 0.4rem; }
+  .stat-card .s-val { font-family: var(--ff-titre); font-size: 1.8rem; font-weight: 600; color: var(--vert); }
+  .stat-card .s-sub { font-size: 0.78rem; color: var(--texte-doux); margin-top: 0.2rem; }
+
+  /* ============================================================
+     LIVE BADGE — Badge animé "Live"
+  ============================================================ */
+  .live-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(220,80,60,0.15); border: 1px solid rgba(220,80,60,0.3); color: #E05A40; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.8rem; border-radius: 20px; margin-bottom: 1.2rem; }
+  .live-dot { width: 7px; height: 7px; background: #E05A40; border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+
+  /* ============================================================
+     SECTIONS — Styles génériques partagés
+  ============================================================ */
+  section { padding: 6rem 5%; }
+  .section-eyebrow { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--or); margin-bottom: 1rem; display: block; }
+  .section-titre { font-family: var(--ff-titre); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: var(--vert); line-height: 1.2; margin-bottom: 1.2rem; }
+  .section-titre strong { font-weight: 700; }
+  .section-sous { font-size: 1rem; color: var(--texte-doux); max-width: 560px; line-height: 1.75; }
+
+  /* ============================================================
+     COMMENT ÇA MARCHE — Section méthode (fond vert)
+     Modifie les 3 étapes dans le HTML plus bas
+  ============================================================ */
+  .comment { background: var(--vert); }
+  .comment .section-titre { color: var(--beige); }
+  .comment .section-eyebrow { color: var(--or); }
+  .comment .section-sous { color: rgba(242,237,228,0.75); }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3.5rem; }
+  .step { border-top: 1px solid rgba(184,150,90,0.4); padding-top: 1.5rem; }
+  .step-num { font-family: var(--ff-titre); font-size: 3.5rem; font-weight: 300; color: var(--or); opacity: 0.5; line-height: 1; margin-bottom: 1rem; }
+  .step h3 { font-family: var(--ff-titre); font-size: 1.4rem; font-weight: 600; color: var(--beige); margin-bottom: 0.7rem; }
+  .step p { font-size: 0.9rem; color: rgba(242,237,228,0.7); line-height: 1.7; }
+
+  /* ============================================================
+     FORFAITS — Les 3 plans tarifaires
+     Modifie les prix et les features dans le HTML plus bas
+  ============================================================ */
+  .forfaits { background: var(--blanc); }
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+  .plan { border: 1.5px solid var(--beige-fonce); border-radius: 4px; padding: 2.5rem 2rem; background: var(--beige); position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+  .plan:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(30,58,47,0.1); }
+  .plan.featured { border-color: var(--vert); background: var(--vert); color: var(--beige); }
+  .plan-badge { position: absolute; top: -1px; left: 50%; transform: translateX(-50%); background: var(--or); color: var(--blanc); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 1rem; border-radius: 0 0 4px 4px; }
+  .plan-nom { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--or); margin-bottom: 0.8rem; }
+  .plan-prix { font-family: var(--ff-titre); font-size: 2.8rem; font-weight: 700; color: var(--vert); line-height: 1; margin-bottom: 0.3rem; }
+  .plan.featured .plan-prix { color: var(--beige); }
+  .plan-periode { font-size: 0.82rem; color: var(--texte-doux); margin-bottom: 1.8rem; }
+  .plan.featured .plan-periode { color: rgba(242,237,228,0.65); }
+  .plan-features { list-style: none; margin-bottom: 2rem; }
+  .plan-features li { font-size: 0.88rem; padding: 0.55rem 0; border-bottom: 1px solid var(--beige-fonce); display: flex; align-items: center; gap: 0.6rem; color: var(--texte); }
+  .plan.featured .plan-features li { border-color: rgba(242,237,228,0.15); color: rgba(242,237,228,0.9); }
+  .plan-features li::before { content: '✓'; color: var(--or); font-weight: 700; flex-shrink: 0; }
+  .plan-features li.non { color: var(--texte-doux); opacity: 0.45; }
+  .plan-features li.non::before { content: '—'; color: currentColor; }
+  .plan.featured .plan-features li.non { color: rgba(242,237,228,0.3); }
+  .plan .btn-primary { width: 100%; text-align: center; background: var(--vert); color: var(--beige); }
+  .plan.featured .btn-primary { background: var(--or); color: var(--blanc); }
+  .plan.featured .btn-primary:hover { background: #a07840; }
+
+  /* ============================================================
+     TÉMOIGNAGES — Section avis clients
+     Modifie les 3 témoignages dans le HTML plus bas
+  ============================================================ */
+  .temoignages { background: var(--beige); }
+  .temoignages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3.5rem; }
+  .temoignage { background: var(--blanc); border: 1px solid var(--beige-fonce); border-radius: 4px; padding: 2rem; }
+  .temoignage-quote { font-family: var(--ff-titre); font-size: 1.1rem; font-style: italic; color: var(--vert); line-height: 1.6; margin-bottom: 1.5rem; }
+  .temoignage-auteur { font-size: 0.82rem; font-weight: 500; color: var(--texte-doux); text-transform: uppercase; letter-spacing: 0.08em; }
+  .temoignage-auteur span { color: var(--or); display: block; font-size: 0.75rem; margin-top: 0.2rem; }
+
+  /* ============================================================
+     CTA FINAL — Appel à l'action en bas de page
+  ============================================================ */
+  .cta-final { background: var(--vert); text-align: center; }
+  .cta-final .section-titre { color: var(--beige); max-width: 640px; margin: 0 auto 1.2rem; }
+  .cta-final .section-sous { color: rgba(242,237,228,0.7); margin: 0 auto 2.5rem; }
+  .cta-final .btn-primary { background: var(--or); color: var(--blanc); font-size: 1rem; padding: 1.1rem 2.8rem; }
+  .cta-final .btn-primary:hover { background: #a07840; }
+
+  /* ============================================================
+     FOOTER — Pied de page + disclaimer AMF
+     Modifie le texte du disclaimer dans le HTML plus bas
+  ============================================================ */
+  footer { background: #111; color: rgba(255,255,255,0.5); padding: 3rem 5%; font-size: 0.78rem; line-height: 1.7; }
+  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; gap: 2rem; }
+  .footer-logo { font-family: var(--ff-titre); font-size: 1.2rem; color: var(--beige); font-weight: 600; }
+  .footer-logo span { color: var(--or); }
+  .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--beige); }
+  .disclaimer { font-size: 0.72rem; color: rgba(255,255,255,0.3); max-width: 900px; }
+
+  /* ============================================================
+     RESPONSIVE — Ajustements mobile
+  ============================================================ */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding-top: 6rem; }
+    .hero-visual { display: none; }
+    .steps { grid-template-columns: 1fr; }
+    .plans { grid-template-columns: 1fr; max-width: 420px; }
+    .temoignages-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV — Modifie les liens ici
+============================================================ -->
+<nav>
+  <div class="nav-logo">Groupe <span>CMP</span></div>
+  <ul class="nav-links">
+    <li><a href="#comment">Comment</a></li>
+    <li><a href="#forfaits">Forfaits</a></li>
+    <li><a href="formation.html" target="_blank">Notre Formation</a></li>
+    <li><a href="#temoignages">Résultats</a></li>
+    <li><a href="https://www.skool.com/groupe-cmp-3784/about" target="_blank" class="nav-cta">Rejoindre →</a></li>
+  </ul>
+</nav>
+
+<!-- ============================================================
+     HERO — Modifie le titre, sous-titre et boutons ici
+============================================================ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="live-badge"><span class="live-dot"></span> Live chaque matin 9h – 11h</div>
+    <span class="hero-eyebrow">Groupe Création, Multiplication & Préservation</span>
+    <h1>Génère un revenu<br>supplémentaire<br><em>en apprenant à trader</em></h1>
+    <p class="hero-sub">Je partage mon analyse des marchés en direct chaque matin. Tu observes, tu apprends et tu pratiques pour atteindre tes objectifs. Peu importe ton niveau — débutant ou expérimenté — la formation est conçue pour toi.</p>
+    <div class="hero-btns">
+      <a href="#forfaits" class="btn-primary">Voir les forfaits →</a>
+      <a href="#comment" class="btn-secondary">Comment ça fonctionne</a>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       GRAPHIQUE — Modifie les chiffres de performance ici
+  ============================================================ -->
+  <div class="hero-visual">
+    <div class="chart-mock">
+      <div class="chart-label">Trades fermés — 40</div>
+      <div class="chart-number">+$4,428.69</div>           <!-- ← Changer le % ici -->
+      <div class="chart-desc">P&L Total net après frais</div> <!-- ← Changer le mois ici -->
+      <div class="chart-bars">
+        <!-- up = barre verte | down = barre rouge — Modifie les hauteurs (%) -->
+        <div class="bar up"   style="height:45%"></div>
+        <div class="bar up"   style="height:70%"></div>
+        <div class="bar down" style="height:30%"></div>
+        <div class="bar up"   style="height:85%"></div>
+        <div class="bar up"   style="height:60%"></div>
+        <div class="bar down" style="height:25%"></div>
+        <div class="bar up"   style="height:90%"></div>
+        <div class="bar up"   style="height:75%"></div>
+        <div class="bar up"   style="height:100%"></div>
+        <div class="bar down" style="height:40%"></div>
+        <div class="bar up"   style="height:80%"></div>
+        <div class="bar up"   style="height:65%"></div>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="s-label">Win Rate</div>
+        <div class="s-val">60%</div>              <!-- ← Changer ici -->
+        <div class="s-sub">Gagnants / Total</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-label">Meilleur jour</div>
+        <div class="s-val">+$1,637</div>              <!-- ← Changer ici -->
+        <div class="s-sub">P&L journalier max</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     COMMENT ÇA MARCHE — Modifie les 3 étapes ici
+============================================================ -->
+<section class="comment" id="comment">
+  <span class="section-eyebrow">La méthode</span>
+  <h2 class="section-titre">Simple. <strong>Transparent. Répétable.</strong></h2>
+  <p class="section-sous">Pas de promesses irréalistes. Juste une méthode claire que tu peux observer et appliquer à ton rythme.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Tu me regardes trader en direct</h3>
+      <p>Chaque matin de 9h à 11h, je partage mon analyse des marchés en temps réel sur Zoom. Tu vois chaque décision, chaque raisonnement, sans filtre.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Tu accèdes aux ressources</h3>
+      <p>Enregistrements des lives, meilleurs trades de la semaine, formation PDF et vidéos formatives — tout est disponible pour revoir et approfondir.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Tu progresses avec du support</h3>
+      <p>La communauté, le channel Élite et les appels de groupe sont là pour répondre à tes questions et t'accompagner dans ta progression.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FORFAITS — Modifie les prix et les features ici
+============================================================ -->
+<section class="forfaits" id="forfaits">
+  <span class="section-eyebrow">Nos forfaits</span>
+  <h2 class="section-titre">Choisis le plan<br><strong>qui te correspond</strong></h2>
+  <p class="section-sous">Chaque forfait te donne accès à la communauté et aux lives. La différence, c'est le niveau d'accompagnement.</p>
+  <div class="plans">
+
+    <!-- FORFAIT A — Modifie le prix et les features ici -->
+    <div class="plan">
+      <div class="plan-nom">Forfait A</div>
+      <div class="plan-prix">45<sup style="font-size:1.2rem">$</sup></div>  <!-- ← Prix -->
+      <div class="plan-periode">par mois — résiliable en tout temps</div>
+      <ul class="plan-features">
+        <li>Mini-formation gratuite incluse</li>
+        <li>Lives trading 9h – 11h</li>
+        <li>Accès à la communauté</li>
+        <li class="non">Meilleurs trades / semaine</li>
+        <li class="non">Enregistrements des lives</li>
+        <li class="non">Formation PDF + Vidéos</li>
+        <li class="non">Accompagnement VIP</li>
+      </ul>
+      <a href="https://www.skool.com/groupe-cmp-3784/about" target="_blank" class="btn-primary">Commencer →</a>
+    </div>
+
+    <!-- FORFAIT B — Modifie le prix et les features ici -->
+    <div class="plan featured">
+      <div class="plan-badge">Le plus populaire</div>
+      <div class="plan-nom">Forfait B</div>
+      <div class="plan-prix">1 899<sup style="font-size:1rem">$</sup></div>  <!-- ← Prix -->
+      <div class="plan-periode">paiement unique — accès 1 an</div>
+      <ul class="plan-features">
+        <li>Mini-formation gratuite incluse</li>
+        <li>Lives trading 9h – 11h</li>
+        <li>Accès communauté 1 an inclus</li>
+        <li>Meilleurs trades / semaine</li>
+        <li>1 enregistrement live / semaine</li>
+        <li>Formation PDF + Vidéos Formatives complète</li>
+        <li class="non">Accompagnement VIP</li>
+      </ul>
+      <a href="formation.html" target="_blank" class="btn-primary" style="margin-bottom:0.6rem; display:block; text-align:center; background:transparent; color:var(--beige); border:1.5px solid rgba(242,237,228,0.4);">Notre Formation →</a>
+      <a href="https://www.skool.com/groupe-cmp-3784/about" target="_blank" class="btn-primary">Choisir ce forfait →</a>
+    </div>
+
+    <!-- FORFAIT C — Modifie le prix et les features ici -->
+    <div class="plan">
+      <div class="plan-nom">Forfait C — Élite</div>
+      <div class="plan-prix">3 699<sup style="font-size:1rem">$</sup></div>  <!-- ← Prix -->
+      <div class="plan-periode">3 mois intensifs + support 1 an</div>
+      <ul class="plan-features">
+        <li>Tout le Forfait B inclus</li>
+        <li>Tous les enregistrements (à vie)</li>
+        <li>Rencontre de groupe hebdo (3 mois)</li>
+        <li>One-on-one hebdo 1h (3 mois)</li>
+        <li>Channel VIP questions (à vie)</li>
+        <li>Accès communauté à vie inclus</li>
+        <li>10 places max par cohorte</li>
+      </ul>
+      <a href="https://legroupecmp.github.io/Candidature/" target="_blank" class="btn-primary">Demander une place →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     TÉMOIGNAGES — Modifie les 3 témoignages ici
+============================================================ -->
+<section class="temoignages" id="temoignages">
+  <span class="section-eyebrow">Témoignages</span>
+  <h2 class="section-titre">Ce que disent<br><strong>nos membres</strong></h2>
+  <div class="temoignages-grid">
+
+    <!-- Témoignage 1 — Modifie le texte, nom, forfait et ville -->
+    <div class="temoignage">
+      <p class="temoignage-quote">"Voir les trades s'exécuter en direct change tout. En 3 semaines j'ai compris plus de choses qu'en 6 mois de YouTube."</p>
+      <div class="temoignage-auteur">Marc-Antoine L.
+        <span>Forfait A — Montréal</span>
+      </div>
+    </div>
+
+    <!-- Témoignage 2 -->
+    <div class="temoignage">
+      <p class="temoignage-quote">"La formation PDF combinée aux enregistrements hebdo me permet de revoir les moments que j'ai manqués. Vraiment complet."</p>
+      <div class="temoignage-auteur">Sabrina T.
+        <span>Forfait B — Québec</span>
+      </div>
+    </div>
+
+    <!-- Témoignage 3 -->
+    <div class="temoignage">
+      <p class="temoignage-quote">"Le one-on-one hebdo a transformé ma façon de gérer mes risques. C'est de loin le meilleur investissement que j'ai fait."</p>
+      <div class="temoignage-auteur">Jérémie P.
+        <span>Forfait C Élite — Laval</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA FINAL — Modifie le texte et le bouton ici
+============================================================ -->
+<section class="cta-final" id="contact">
+  <h2 class="section-titre">Prêt à générer ton premier<br>revenu supplémentaire?</h2>
+  <p class="section-sous">Rejoins la communauté et commence à apprendre dès demain matin, 9h, en direct.</p>
+  <a href="https://www.skool.com/groupe-cmp-3784/about" target="_blank" class="btn-primary">Rejoindre maintenant →</a>
+</section>
+
+<!-- ============================================================
+     FOOTER — Modifie les liens et le disclaimer AMF ici
+============================================================ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">Groupe <span>CMP</span></div>
+    <div class="footer-links">
+      <a href="#">Accueil</a>
+      <a href="#comment">À propos</a>
+      <a href="#forfaits">Formations</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+  <!-- Disclaimer AMF — Ne pas modifier sans consulter un avocat -->
+  <p class="disclaimer">
+    Groupe Création, Multiplication et Préservation est une plateforme éducative et n'est pas réglementée par l'Autorité des Marchés Financiers (AMF). Groupe Création, Multiplication et Préservation ne gère aucun fonds, n'est pas un fonds d'investissement et ne fournit aucun conseil financier. Les informations fournies sont à des fins éducatives uniquement et ne constituent pas des recommandations d'investissement. Les stratégies présentées comportent des risques importants. Consultez un conseiller financier agréé avant toute décision d'investissement. Groupe Création, Multiplication et Préservation ne pourra être tenu responsable des pertes financières résultant de l'utilisation de ses services.<br><br>
+    © 2025 Groupe Création, Multiplication et Préservation — Tous droits réservés.
+  </p>
+</footer>
+
+</body>
+</html>

@@ -399,7 +399,7 @@
 <section class="cta-final" id="contact">
   <h2 class="section-titre">Prêt à générer ton premier<br>revenu supplémentaire?</h2>
   <p class="section-sous">Rejoins la communauté et commence à apprendre dès demain matin, 9h, en direct.</p>
-  <a href="https://legroupecmp.github.io/Trade-Math-CMP/" target="_blank" class="btn-primary">Outils de planification →</a>
+  <a href="#" onclick="openOutilsModal(); return false;" class="btn-primary">Outils de planification →</a>
 </section>
 
 <!-- ============================================================
@@ -530,6 +530,24 @@
   </div>
 </div>
 
+<!-- ============================================================
+     MODALE — Outils de planification (Trade Math CMP)
+============================================================ -->
+<div id="outilsModal" style="display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px); padding:2rem 1rem;">
+  <div style="max-width:1100px; height:calc(100vh - 4rem); margin:0 auto; background:var(--blanc); border-radius:6px; overflow:hidden; position:relative; display:flex; flex-direction:column;">
+
+    <!-- En-tête -->
+    <div style="background:var(--vert); padding:1rem 1.5rem; display:flex; align-items:center; justify-content:space-between; flex-shrink:0;">
+      <span style="font-family:var(--ff-titre); font-size:1.2rem; font-weight:600; color:var(--beige);">Outils de <span style="color:var(--or);">planification</span></span>
+      <button onclick="closeOutilsModal()" style="background:transparent; border:none; font-size:1.4rem; cursor:pointer; color:var(--beige); line-height:1;">✕</button>
+    </div>
+
+    <!-- Contenu — l'outil externe -->
+    <iframe src="https://legroupecmp.github.io/Trade-Math-CMP/" title="Outils de planification — Trade Math CMP" style="flex:1; width:100%; border:none;"></iframe>
+
+  </div>
+</div>
+
 <script>
   function openModal() {
     document.getElementById('formationModal').style.display = 'block';
@@ -543,9 +561,26 @@
   document.getElementById('formationModal').addEventListener('click', function(e) {
     if (e.target === this) closeModal();
   });
-  // Fermer avec la touche Escape
+
+  function openOutilsModal() {
+    document.getElementById('outilsModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeOutilsModal() {
+    document.getElementById('outilsModal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  // Fermer en cliquant en dehors
+  document.getElementById('outilsModal').addEventListener('click', function(e) {
+    if (e.target === this) closeOutilsModal();
+  });
+
+  // Fermer avec la touche Escape (les deux modales)
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Escape') {
+      closeModal();
+      closeOutilsModal();
+    }
   });
 </script>
 

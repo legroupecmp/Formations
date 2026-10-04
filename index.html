@@ -232,40 +232,42 @@
   ============================================================ -->
   <div class="hero-visual">
     <div class="chart-mock">
-      <div class="chart-label">Dernières performances</div>
-      <div class="chart-number">+$11,802.67</div>           <!-- ← Changer le % ici -->
-      <div class="chart-desc">P&L Total net après frais</div> <!-- ← Changer le mois ici -->
-      <div class="chart-bars">
-        <!-- up = barre verte | down = barre rouge — Modifie les hauteurs (%) -->
-        <div class="bar up"   style="height:45%"></div>
-        <div class="bar up"   style="height:70%"></div>
-        <div class="bar down" style="height:30%"></div>
-        <div class="bar up"   style="height:85%"></div>
-        <div class="bar up"   style="height:60%"></div>
-        <div class="bar down" style="height:25%"></div>
-        <div class="bar up"   style="height:90%"></div>
-        <div class="bar up"   style="height:75%"></div>
-        <div class="bar up"   style="height:100%"></div>
-        <div class="bar down" style="height:40%"></div>
-        <div class="bar up"   style="height:80%"></div>
-        <div class="bar up"   style="height:65%"></div>
+      <div class="chart-label" style="margin-bottom:1.2rem;">Derniers meilleurs trades</div>
+
+      <!-- ============================================================
+           TRADES — Un bloc par trade. Pour en ajouter : copie un bloc
+           "trade" complet et change le ticker, les prix et le gain.
+      ============================================================ -->
+
+      <!-- Trade 1 -->
+      <div class="trade" style="display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; padding:1rem 0; border-top:1px solid rgba(242,237,228,0.15);">
+        <div style="font-family:var(--ff-titre); font-size:2rem; font-weight:600; color:var(--beige); line-height:1;">SEDV</div>
+        <div style="display:flex; gap:1.5rem;">
+          <div>
+            <div style="font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(242,237,228,0.55);">Achat</div>
+            <div style="font-family:var(--ff-titre); font-size:1.4rem; font-weight:600; color:var(--beige);">3,38 $</div>
+          </div>
+          <div>
+            <div style="font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(242,237,228,0.55);">Vente</div>
+            <div style="font-family:var(--ff-titre); font-size:1.4rem; font-weight:600; color:var(--beige);">4,78 $</div>
+          </div>
+          <div>
+            <div style="font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(242,237,228,0.55);">Gain</div>
+            <div style="font-family:var(--ff-titre); font-size:1.4rem; font-weight:600; color:#7EC8A4;">+41,4 %</div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="stats-row" style="grid-template-columns: 1fr 1fr 1fr;">
-      <div class="stat-card">
-        <div class="s-label">Trades fermés</div>
-        <div class="s-val" style="font-size:1.5rem;">48</div>              <!-- ← Changer ici -->
-        <div class="s-sub">Logique FIFO</div>
-      </div>
-      <div class="stat-card">
-        <div class="s-label">Win Rate</div>
-        <div class="s-val" style="font-size:1.5rem;">67%</div>              <!-- ← Changer ici -->
-        <div class="s-sub">Gagnants / Total</div>
-      </div>
-      <div class="stat-card">
-        <div class="s-label">Meilleur jour</div>
-        <div class="s-val" style="font-size:1.5rem;">+$1,715</div>              <!-- ← Changer ici -->
-        <div class="s-sub">P&L journalier max</div>
+
+      <!-- Trade 2 : à ajouter -->
+      <!-- Trade 3 : à ajouter -->
+
+      <!-- Win rate -->
+      <div style="display:flex; align-items:center; justify-content:space-between; padding-top:1rem; border-top:1px solid rgba(242,237,228,0.15);">
+        <div>
+          <div style="font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(242,237,228,0.55);">Win Rate</div>
+          <div style="font-size:0.78rem; color:rgba(242,237,228,0.55);">Gagnants / Total</div>
+        </div>
+        <div style="font-family:var(--ff-titre); font-size:2rem; font-weight:600; color:#7EC8A4; line-height:1;">67%</div>  <!-- ← Changer ici -->
       </div>
     </div>
   </div>
